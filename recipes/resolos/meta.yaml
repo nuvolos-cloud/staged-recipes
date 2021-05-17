@@ -1,0 +1,50 @@
+{% set name = "resolos" %}
+{% set version = "0.3.4" %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/resolos-{{ version }}.tar.gz
+  sha256: 742c779c7befe4a5be8e8634fe8d48ab7dd5659a6e9ea6224d162fe3f66be7e9
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - click
+    - click-log
+    - conda-pack
+    - pyjwt
+    - python
+    - pyyaml
+    - requests
+    - semver
+
+test:
+  commands:
+    - pytest --ignore=tests/integration/
+  requires:
+    - pytest
+
+about:
+  home: https://github.com/nuvolos-cloud/resolos
+  summary: Reproducible research made easy
+  license: MIT
+  description: |
+    Resolos is a toolkit written in Python for maintaining reproducible environments for scientific computations.
+    It's main goal is to enable researchers to easily replicate environments through space (running code on HPC environment)
+    and time (environment preservation for long term archival).
+
+extra:
+  recipe-maintainers:
+    - tamas-ac
